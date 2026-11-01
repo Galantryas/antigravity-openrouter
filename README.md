@@ -1,4 +1,4 @@
-# Antigravity OpenRouter
+﻿# Antigravity OpenRouter
 
 Adds OpenRouter models to the native Google Antigravity agent chat.
 
@@ -21,12 +21,22 @@ The extension starts a loopback proxy, points both hooks at it, and rewrites onl
 the requests whose model id belongs to an injected entry. Everything else is
 forwarded byte-for-byte.
 
+## Install
+
+Download `antigravity-openrouter-0.0.1.vsix` from the [latest release](https://github.com/Galantryas/antigravity-openrouter/releases) and install it:
+
+```bash
+code --install-extension antigravity-openrouter-0.0.1.vsix
+```
+
+Or build it yourself with `npm install && npm run package`.
+
 ## Setup
 
 1. `Antigravity OpenRouter: Open settings panel` (or click the status bar item).
-2. Paste your OpenRouter API key → **Save key** (stored in the OS credential
+2. Paste your OpenRouter API key â†’ **Save key** (stored in the OS credential
    store, never in `settings.json` or logs).
-3. **Add from OpenRouter** → search → select models → **Add selected**.
+3. **Add from OpenRouter** â†’ search â†’ select models â†’ **Add selected**.
 4. Reload the window; the models appear in the Antigravity picker under
    "OpenRouter".
 
@@ -55,3 +65,4 @@ Google endpoint.
 - `Enable OpenRouter routing` / `Disable OpenRouter routing`
 - `Restart proxy and re-attach language server`
 - `Show log`
+
