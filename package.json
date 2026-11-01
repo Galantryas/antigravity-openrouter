@@ -1,0 +1,169 @@
+{
+  "name": "antigravity-openrouter",
+  "displayName": "Antigravity OpenRouter",
+  "description": "Adds OpenRouter models to the native Antigravity agent chat picker.",
+  "version": "0.0.1",
+  "publisher": "galantryas",
+  "license": "MIT",
+  "engines": {
+    "vscode": "^1.100.0"
+  },
+  "categories": [
+    "AI",
+    "Other"
+  ],
+  "main": "./dist/extension.js",
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "contributes": {
+    "commands": [
+      {
+        "command": "antigravityOpenRouter.openSettings",
+        "title": "Open settings panel (API key & models)",
+        "category": "Antigravity OpenRouter"
+      },
+      {
+        "command": "antigravityOpenRouter.setApiKey",
+        "title": "Set OpenRouter API key",
+        "category": "Antigravity OpenRouter"
+      },
+      {
+        "command": "antigravityOpenRouter.testKey",
+        "title": "Test OpenRouter connection",
+        "category": "Antigravity OpenRouter"
+      },
+      {
+        "command": "antigravityOpenRouter.addModel",
+        "title": "Add OpenRouter models to the picker",
+        "category": "Antigravity OpenRouter"
+      },
+      {
+        "command": "antigravityOpenRouter.removeModel",
+        "title": "Remove OpenRouter models",
+        "category": "Antigravity OpenRouter"
+      },
+      {
+        "command": "antigravityOpenRouter.listModels",
+        "title": "List configured models",
+        "category": "Antigravity OpenRouter"
+      },
+      {
+        "command": "antigravityOpenRouter.enable",
+        "title": "Enable OpenRouter routing",
+        "category": "Antigravity OpenRouter"
+      },
+      {
+        "command": "antigravityOpenRouter.disable",
+        "title": "Disable OpenRouter routing (restore native)",
+        "category": "Antigravity OpenRouter"
+      },
+      {
+        "command": "antigravityOpenRouter.restart",
+        "title": "Restart proxy and re-attach language server",
+        "category": "Antigravity OpenRouter"
+      },
+      {
+        "command": "antigravityOpenRouter.showLog",
+        "title": "Show log",
+        "category": "Antigravity OpenRouter"
+      },
+      {
+        "command": "antigravityOpenRouter.reloadWindow",
+        "title": "Reload window",
+        "category": "Antigravity OpenRouter"
+      }
+    ],
+    "configuration": {
+      "title": "Antigravity OpenRouter",
+      "properties": {
+        "antigravityOpenRouter.port": {
+          "type": "number",
+          "default": 57331,
+          "description": "Loopback port for the local Cloud Code proxy."
+        },
+        "antigravityOpenRouter.upstream": {
+          "type": "string",
+          "default": "https://daily-cloudcode-pa.googleapis.com",
+          "description": "Cloud Code endpoint native models are forwarded to."
+        },
+        "antigravityOpenRouter.autoEnable": {
+          "type": "boolean",
+          "default": true,
+          "description": "Re-attach the proxy automatically after a window reload when routing was enabled."
+        },
+        "antigravityOpenRouter.recordCaptures": {
+          "type": "boolean",
+          "default": false,
+          "description": "Write request/response bodies for every proxied call to the extension's storage folder (debugging aid, contains prompts)."
+        },
+        "antigravityOpenRouter.models": {
+          "type": "array",
+          "default": [],
+          "description": "OpenRouter models injected into the Antigravity picker. Managed by the \"Add OpenRouter models\" command.",
+          "items": {
+            "type": "object",
+            "required": [
+              "alias",
+              "displayName",
+              "modelId"
+            ],
+            "properties": {
+              "alias": {
+                "type": "string",
+                "description": "Stable key; the picker id becomes or/<alias>."
+              },
+              "displayName": {
+                "type": "string"
+              },
+              "modelId": {
+                "type": "string",
+                "description": "OpenRouter model id, e.g. anthropic/claude-sonnet-4.5."
+              },
+              "contextLength": {
+                "type": "number"
+              },
+              "maxOutputTokens": {
+                "type": "number"
+              },
+              "vision": {
+                "type": "boolean"
+              },
+              "reasoning": {
+                "type": "boolean"
+              },
+              "providerOrder": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "allowFallbacks": {
+                "type": "boolean"
+              }
+            }
+          }
+        },
+        "antigravityOpenRouter.identityPoolStart": {
+          "type": "number",
+          "default": 1600,
+          "description": "Highest MODEL_PLACEHOLDER_M### value used when allocating native identities for injected models (allocated downwards)."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "build": "node esbuild.mjs",
+    "watch": "node esbuild.mjs --watch",
+    "typecheck": "tsc --noEmit",
+    "test": "node test/build.mjs && node --test \"out/test/*.mjs\"",
+    "package": "vsce package --no-dependencies"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "@types/vscode": "^1.100.0",
+    "@vscode/vsce": "^4.1.0",
+    "esbuild": "^0.24.0",
+    "typescript": "^5.7.0"
+  }
+}
